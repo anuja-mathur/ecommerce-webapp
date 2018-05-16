@@ -1,0 +1,119 @@
+<!doctype html>
+	<html>
+		<head>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+			<title>E-commerce</title>
+			<meta name="description" content="">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+			<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+			<link rel="stylesheet" href="css/style.css">
+            <!--Cart Table Starts-->
+			<script id="cartProduct" type="text/x-handlebars-template">
+                <tr data-product-value='{{ dataProductValue }}'>
+                   <td class='item-image'>
+                       <img class="img-fluid w100" src="{{ itemImage }}">
+				   </td>
+                    <td class='item-name'><h3>{{ itemName }}</h3></td>
+					<td class='item-qty'>{{ count }}</td>
+					<td class='item-price'>${{ price }}</td>
+                </tr>
+			</script>
+			<!--Cart Table Ends-->
+		</head>
+		<body>
+			<div class="wrapper">
+				<!--Header Starts-->
+				<header class="main-header">
+					<div class="container">
+						<div class="row">
+							<div class="col-6 align-self-center">
+								<h1 class="site-title"><a href="/index.html">E-commerce</a></h1>
+							</div>
+						</div>
+					</div>
+				</header>
+				<!--Header Ends-->
+
+            	<!--Content Starts-->
+				<section class="breadcrumb-container">
+					<div class="container">
+						<div class="row">
+							<div class="col-12 text-center">
+								<h2>Shopping Cart</h2>
+								<p>YOUR PERSONAL BASKET</p>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="page-content">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<div class="shopping-cart">
+									<div class="table-responsive-sm">
+										<table class="table table-hover cart-table">
+											<thead>
+												<tr>
+													<th>Product</th>
+													<th>Name</th>
+													<th>Qty</th>
+													<th>Price</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+											<tfoot>
+												<tr>
+													<td colspan="3" class="text-right"><b>Estimated GST</b></td>
+													<td class="tax">$<span>32</span></td>
+												</tr>
+												<tr>
+													<td colspan="3" class="text-right"><b>Shipping</b></td>
+													<td class="tax">$<span>99</span></td>
+												</tr>
+												<tr class="optional-warrenty">
+													<td colspan="3" class="text-right"><b>Extended Warrenty</b></td>
+													<td class="tax">$<span>100</span></td>
+												</tr>
+												<tr>
+													<td colspan="3" class="text-right"><b>Total</b></td>
+													<td class="total"></td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row checkout-buttons">
+							<div class="col-12 text-center mt-4">
+								<a href="index.html" class="btn-black">Continue Shopping</a>
+								<a href="payment.html" class="btn-red ml-2">Go Payment Methods</a>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!--Content Ends-->
+	
+				<!--Footer Starts-->
+				<footer>
+					<div class="container">
+						<div class="row">
+							<div class="col-12 text-center">
+								<p class="mb-0">Copyright © 2018</p>
+							</div>
+						</div>
+					</div>
+				</footer>
+				<!--Footer Starts-->
+			</div>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+			<script src="js/main.js"></script>
+	  	</div>
+	</body>
+</html>
