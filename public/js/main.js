@@ -215,7 +215,7 @@ ecommerce.prototype = {
       console.log("ifExtended", ifExtended, extended);
       if(ifExtended) {
         $(".optional-warrenty").show();
-        totalPrice += 100;
+        //totalPrice += 100;
       } else {
         $(".optional-warrenty").hide();
       }
@@ -233,7 +233,9 @@ ecommerce.prototype = {
       });
       if($(_this.selectors.tax)[0]) {
         $(_this.selectors.tax).each(function() {
-          tax += parseInt($(this).text());
+            if($(this).parents('tr').is(":visible")){
+                tax += parseInt($(this).text());
+            }
         });
         totalPrice += tax;
       }
