@@ -8,7 +8,7 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-			<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
             <link rel="stylesheet" href="css/style.css">
             <!--Cart Dropdown Starts-->
             <script id="addProduct" type="text/x-handlebars-template">
@@ -27,21 +27,59 @@
             <!--Products Starts-->
             <script id="content" type="text/x-handlebars-template">
                 {{#each product}}
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-3" data-product="product-{{@index}}">
+                    <div class="col-12" data-product="product-{{@index}}">
                         <div class="item">
-                            <div class="item-image">
-                                <img class="img-fluid w100" src="{{Image}}">
-                            </div>
-                            <h2>{{Name}}</h2>
-                            <p>
-                                {{Description}}
-                            </p>
-                            <div class="item-bottom-content row justify-content-between">
-                                <div class="col align-self-center">
-                                    <p class="item-price mb-0">$<span>{{Price}}</span></p>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-3 align-self-center">
+                                    <div class="item-image">
+                                        <img class="img-fluid w100" src="{{Image}}">
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <button data-id="{{@index}}" class="item-add btn-black">Add to Cart</button>
+                                <div class="col-12 col-sm-12 col-md-4">
+                                    <h2>{{Name}}</h2>
+                                    <h4>Model#: {{Model}}</h4>
+                                    <ul class="list-unstyled list-inline item-rating">
+                                        {{#times Rating}}
+                                            <li class="list-inline-item"><i class="fas fa-star"></i></li>
+                                        {{/times}}
+                                        <li class="list-inline-item">({{Review}})</li>
+                                    </ul>
+                                    <ul class="item-features">
+                                        {{#each Description}}
+                                            <li>{{this}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-2 pt-3">
+                                    <h4>Online</h4>
+                                    <p class="item-price mb-0">
+                                        {{#if Discount}}
+                                            ${{DiscountedPrice}}.<span>00</span>
+                                        {{else}}
+                                            ${{Price}}.<span>00</span>
+                                        {{/if}}
+                                    </p>
+                                    {{#if isNew}}
+                                        <span class="new-badge">NEW</span>
+                                    {{/if}}
+                                    {{#if Discount}}
+                                        <span class="old-price">
+                                            List Price:<strike>${{Price}}.00</strike><br/>
+                                            <b>You Save:</b><br/>
+                                            ${{Savings}}({{Discount}}%)
+                                        </span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-3 pt-3">
+                                    <ul class="item-features">
+                                        {{#if freeShipping}}<li><b>Free Shipping available</b></li>{{/if}}
+                                        {{#if freePickup}}<li><b>Free Store pickup</b> as soon as <b>{{freePickup}}</b> with <img src="images/site-store-icon.png" alt="icon" class="img-fluid"></li>{{/if}}
+                                    </ul>
+                                    <button data-id="{{@index}}" class="item-add btn-black">
+                                        <span class="button-cart-icon"><i class="fas fa-shopping-cart"></i></span>
+                                        <span class="button-added-icon"><i class="fas fa-check"></i></span>
+                                        Add to Cart
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -52,72 +90,52 @@
 		</head>
 	<body>
         <div class="wrapper">
-            <!--Header Starts-->
-            <header class="main-header">
+            <!--Content Starts-->
+            <section class="page-content">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 align-self-center">
-                            <h1 class="site-title"><a href="/index.html">E-commerce</a></h1>
-                        </div>
-                        <div class="col-12 col-sm-6 text-right">
-                            <div class="cart-content">
-                                <span class="showCart mr-3 dropdown">
-                                    <a class="dropdown-toggle" href="#" role="button" id="item-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="fab fa-opencart mr-2"></span>
-                                        <span class="cart-quantity"></span> Cart - <span class="cart-total">$<span>0</span></span>
-                                    </a>
-                                    <div id="cart-content" class="dropdown-menu cart-content-dropdown" aria-labelledby="item-dropdown">
-                                        <div class="cart-items">
-                                        
+                    <div id="products" class="products">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 align-self-center">
+                                <label class="custom-checkbox" for="warranty">
+                                    Add 2 years extended warranty
+                                    <input disabled type="checkbox" id="warranty" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="col-12 col-sm-6 text-right">
+                                <div class="cart-content">
+                                    <span class="showCart mr-3 dropdown">
+                                        <a class="dropdown-toggle" href="#" role="button" id="item-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img src="images/cart-icon.png" alt="cart" class="img-fluid">
+                                            <span class="cart-quantity">0</span>&nbsp;<span class="text-uppercase">item(s) added</span>
+                                        </a>
+                                        <div id="cart-content" class="dropdown-menu cart-content-dropdown" aria-labelledby="item-dropdown">
+                                            <div class="cart-items">
+                                            
+                                            </div>
                                         </div>
-                                    </div>
-                                </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Product will load here-->
+                        <div class="content row"></div>
+                        <div class="product-total">
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <p class="text-uppercase mb-0">Total <span class="cart-total">$<span></span></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-12 text-center">
                                 <button class="btn-red cart-checkout">Checkout</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </header>
-            <!--Header Ends-->
-
-            <!--Banner Starts-->
-            <section>
-                <img class="img-fluid w100" src="images/banner-image.jpg" alt=""/>
-            </section>
-            <!--Banner Ends-->
-
-            <!--Content Starts-->
-            <section class="page-content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="heading">
-                                <h2>Our <span>Products</span></h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="products" class="products">
-                        <div class="content row"></div>
-                        <div data-warranty="100">
-                            <input type="checkbox" id="warranty" />
-                            <label for="warranty">Add 2 years extended warranty</label>
-                        </div>
-                    </div>
-                </div>
             </section>
             <!--Content Ends-->
-
-            <!--Footer Starts-->
-            <footer>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <p class="mb-0">Copyright © 2018</p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-            <!--Footer Starts-->
         </div>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

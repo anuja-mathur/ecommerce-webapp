@@ -2,53 +2,61 @@
     "product": [
         {
             "Image": "images/item-img-1-6.jpg",
-            "Name": "Mp3 Sumergible Deportivo Slim Con 8GB",
-            "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..",
-            "Price": 249
-
+            "Name": "Sony KDL32R300B 32\" 720p 60Hz LED LCD HDTV",
+            "Model": "KDL32R300B",
+            "Rating": 4,
+            "Review": 10,
+            "Description": [
+        		"31.5\" diagonal screen size",
+        		"HDMI Inputs: 2",
+        		"89-degree viewing angles"
+            ],
+            "Price": 199,
+            "DiscountedPrice": 0,
+            "Savings": 0,
+            "Discount": 0,
+            "isNew": true,
+            "freeShipping": true,
+            "freePickup": "today"
         },
-        {
+         {
             "Image": "images/item-img-1-7.jpg",
-            "Name": "Reloj Inteligente Smart Watch M26 Touch Bluetooh ",
-            "Description": "Sed ut perspiciatis unde omnis iste natus error...",
-            "Price": 349
-
+            "Name": "VIZIO E550i-B2 55 1080p 120Hz Full-Array LED Smart HDTV",
+            "Model": "E550i-B2",
+            "Rating": 4.5,
+            "Review": 83,
+            "Description": [
+        		"New, easier to use Smart TV",
+        		"Built-in Wi-Fi",
+        		"Active LED Zones x12",
+        		"120Hz Effective Refresh Rate w/ Clear Action 180"
+            ],
+            "Price": 678,
+            "DiscountedPrice": 0,
+            "Savings": 0,
+            "Discount": 0,
+            "isNew": true,
+            "freeShipping": true,
+            "freePickup": "today"
         },
-        {
+         {
             "Image": "images/item-img-1-8.jpg",
-            "Name": "Teclado Inalambrico Bluetooth Con Air Mouse",
-            "Description": "Quis autem vel eum iure reprehenderit qui in...",
-            "Price": 399
-        },
-        {
-            "Image": "images/item-img-1-9.jpg",
-            "Name": "Funda Para Ebook 7\" 128GB full HD",
-            "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..",
-            "Price": 799
-        },
-        {
-            "Image": "images/item-img-1-10.jpg",
-            "Name": "Reloj Inteligente Smart Watch M26 Touch Bluetooh ",
-            "Description": "Quis autem vel eum iure reprehenderit qui in...",
-            "Price": 499
-        },
-        {
-            "Image": "images/item-img-1-11.jpg",
-            "Name": "Teclado Inalambrico Bluetooth Con Air Mouse",
-            "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit..",
-            "Price": 599
-        },
-        {
-            "Image": "images/item-img-1-12.jpg",
-            "Name": "Funda Para Ebook 7\" 128GB full HD",
-            "Description": "Sed ut perspiciatis unde omnis iste natus error...",
-            "Price": 999
-        },
-        {
-            "Image": "images/item-img-1-13.jpg",
-            "Name": "Reloj Inteligente Smart Watch M26 Touch Bluetooh ",
-            "Description": "Quis autem vel eum iure reprehenderit qui in...",
-            "Price": 1199
+            "Name": "SCEPTRE X405BV-FHDR 40\" LED Class 1080P HDTV with ultra slim metal brush bezel, 60Hz",
+            "Model": "X405BV-FHDR",
+            "Rating": 4.5,
+            "Review": 3415,
+            "Description": [
+        		"40\" diagonal screen size",
+        		"HDMI Inputs: 3",
+        		"Wall mountable"
+            ],
+            "Price": 399,
+            "DiscountedPrice": 259,
+            "Savings": 140,
+            "Discount": 35,
+            "isNew": false,
+            "freeShipping": true,
+            "freePickup": "9/25"
         }
     ]
 }

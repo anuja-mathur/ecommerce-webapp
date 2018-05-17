@@ -19,7 +19,7 @@
         cartTable: ".cart-table tbody",
         cartTableTotal: ".cart-table .total",
         tax: ".tax span",
-        extendedWarrenty: "#warranty"
+        extendedWarrenty: "#warranty",
     };
     this.init();
 };
@@ -42,7 +42,14 @@ ecommerce.prototype = {
             _this.fetchItems();
             _this.bindEvents();
         });
-        //redirectCart();
+
+        // for loop
+        Handlebars.registerHelper('times', function(n, block) {
+            var accum = '';
+            for(var i = 0; i < n; ++i)
+                accum += block.fn(i);
+            return accum;
+        });
     },
     updateCart: function(dataId, cartItemContainer, onLoad) {
         var itemExist = false;
@@ -62,36 +69,39 @@ ecommerce.prototype = {
             });
         }
         
-        $(this.selectors.cartQuantity).text(this.currentCartValue);
-        $(this.selectors.cartTotal).text(this.currentItemsCost);
+        this.updateCartValue();
         return itemExist;
+    },
+    updateCartValue: function() {
+        console.log("this.selectors.cartQuantity", this.selectedItems);
+        $(this.selectors.cartQuantity).text(this.selectedItems.length);
+        $(this.selectors.cartTotal).text(this.currentItemsCost);
+        for(var i in this.selectedItems) {
+            $("button[data-id='"+this.selectedItems[i].id+"']").addClass("already-added");
+        }
+        if(this.selectedItems.length) {
+            $(this.selectors.extendedWarrenty).removeAttr("disabled");
+        }
     },
     bindEvents: function() {
         var _this = this;
         $(this.selectors.addItem).unbind("click").bind("click", function() {
             var dataId = $(this).attr("data-id");
-            _this.fillCart(dataId, 1);
-            sessionStorage.setItem("items", JSON.stringify(_this.selectedItems));
+
+            if($(this).hasClass("already-added")) {
+                //Need to remove the item then
+                $(this).removeClass("already-added");
+                _this.removeItems(dataId);
+            } else {
+                _this.fillCart(dataId, 1);
+                _this.updateWarrentyCheckbox();
+                sessionStorage.setItem("items", JSON.stringify(_this.selectedItems));
+                $(this).addClass("already-added");
+            }
         });
         $(this.selectors.itemDelete).unbind("click").bind("click", function() {
             var dataId = $(this).attr("data-id");
-            for(var i in _this.selectedItems) {
-                if(parseInt(_this.selectedItems[i].id) === parseInt(dataId)) {
-                    //Delete from cart.
-                    _this.selectedItems.splice(i, 1);
-                }
-            }
-            //If cart is empty
-            if(!_this.selectedItems.length) {
-                sessionStorage.setItem("extended", false);
-                _this.currentItemsCost -= 100;
-                $(_this.selectors.cartTotal).text(_this.currentItemsCost);
-                $(_this.selectors.extendedWarrenty).prop('checked', false);
-            }
-            sessionStorage.setItem("items", JSON.stringify(_this.selectedItems));
-            _this.currentItemsCost = 0;
-            _this.fetchItems(_this.selectedItems);
-            _this.bindEvents();
+            _this.removeItems(dataId);
         });
         $(this.selectors.cartCheckout).unbind("click").bind("click", function() {
             console.log("_this.selectedItems", _this.selectedItems);
@@ -107,9 +117,39 @@ ecommerce.prototype = {
             } else {
                 _this.currentItemsCost -= 100;
             }
-            $(_this.selectors.cartTotal).text(_this.currentItemsCost);
+            _this.updateCartValue();
             sessionStorage.setItem("extended", this.checked);
         });
+    },
+    removeItems: function(dataId) {
+        for(var i in this.selectedItems) {
+            if(parseInt(this.selectedItems[i].id) === parseInt(dataId)) {
+                //Delete from cart.
+                this.selectedItems.splice(i, 1);
+            }
+        }
+        //If cart is empty
+        if(!this.selectedItems.length) {
+            sessionStorage.setItem("extended", false);
+            this.currentItemsCost -= 100;
+            this.updateCartValue();
+            $(this.selectors.extendedWarrenty).prop('checked', false);
+        }
+        sessionStorage.setItem("items", JSON.stringify(this.selectedItems));
+        this.currentItemsCost = 0;
+        this.fetchItems(this.selectedItems);
+        this.bindEvents();
+        this.updateWarrentyCheckbox();
+        this.updateCartValue();
+        $("button[data-id='"+dataId+"']").removeClass("already-added");
+    },
+    updateWarrentyCheckbox: function() {
+        console.log("this.selectedItems", this.selectedItems);
+        if(!this.selectedItems.length) {
+            $(this.selectors.extendedWarrenty).attr('disabled', 'disabled');
+        } else {
+            $(this.selectors.extendedWarrenty).removeAttr('disabled');
+        }
     },
     fillCart: function(dataId, count = 1, onLoad) {
         var itemContainer = $('button[data-id="'+dataId+'"]').parents('.item').parent();
@@ -121,7 +161,7 @@ ecommerce.prototype = {
 
         if(onLoad) {
             this.currentItemsCost = this.currentItemsCost + (this.allItems.product[dataId].Price * count);
-            $(this.selectors.cartTotal).text(this.currentItemsCost);
+            this.updateCartValue();
         } else {
             this.currentItemsCost = this.currentItemsCost + this.allItems.product[dataId].Price;
         }
@@ -147,12 +187,12 @@ ecommerce.prototype = {
         }
         this.currentItemsCost = (extendedWarrenty == "true" 
         || extendedWarrenty == true) ? 100 : 0;
-        $(this.selectors.cartItems).html("");
-        $(this.selectors.cartTotal).text(this.currentItemsCost);
+        $(this.selectors.cartItems).html('');
         $.each(itemObj, function(item, value) {
             _this.fillCart(value.id, value.count, true);
         });
         this.selectedItems = itemObj;
+        this.updateCartValue();
     },
     fetchItems: function(existingItems) {
         var items = existingItems ? existingItems : sessionStorage.getItem("items");
